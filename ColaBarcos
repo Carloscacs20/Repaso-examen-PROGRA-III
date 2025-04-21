@@ -1,0 +1,91 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import javax.swing.*;
+
+public class ColaBarcos {
+    private Queue<BarcoNombresCompletos> cola;
+
+    public ColaBarcos() {
+        cola = new LinkedList<>();
+    }
+
+    // R1 - Encolar 5 barcos
+    public void encolarBarcos() {
+        // Primer barco con constructor por defecto
+        cola.add(new BarcoNombresCompletos());
+
+        // Cuatro barcos con datos predefinidos
+        cola.add(new BarcoNombresCompletos("ABC001", "Yamaha", 2010, "Lancha"));
+        cola.add(new BarcoNombresCompletos("XYZ123", "Bayliner", 2005, "Yate"));
+        cola.add(new BarcoNombresCompletos("LMN456", "Jeanneau", 1999, "Velero"));
+        cola.add(new BarcoNombresCompletos("PQR789", "Azimut", 2018, "Yate"));
+
+        // Mostrar los barcos en un TextArea
+        JTextArea textArea = new JTextArea();
+        for (BarcoNombresCompletos barco : cola) {
+            textArea.append(barco.toString() + "\n---------------------\n");
+        }
+        JOptionPane.showMessageDialog(null, new JScrollPane(textArea), "Barcos Encolados", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    // R2 - Calcular costo de amarre
+    public void calcularCostoAmarre() {
+        for (BarcoNombresCompletos barco : cola) {
+            int añoActual = 2024;
+            int antiguedad = añoActual - barco.getAño();
+            int costo = 0;
+
+            if (barco.getAño() < 1950 || barco.getAño() > añoActual) {
+                JOptionPane.showMessageDialog(null, "Año fuera de rango para el barco: " + barco.getMatricula());
+                continue;
+            }
+
+            switch (barco.getTipo()) {
+                case "Velero":
+                    costo = 200 * antiguedad;
+                    break;
+                case "Yate":
+                    costo = 300 * antiguedad;
+                    break;
+                case "Lancha":
+                    costo = 100 * antiguedad;
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Tipo desconocido para el barco: " + barco.getMatricula());
+                    continue;
+            }
+
+            String mensaje = barco.toString() +
+                "\nAntigüedad: " + antiguedad + " años" +
+                "\nCosto de Amarre: $" + costo;
+
+            JOptionPane.showMessageDialog(null, mensaje, "Costo Amarre", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    // R3 - Copiar barcos de una marca específica a otra cola
+    public void copiarPorMarca(String marca) {
+        Queue<BarcoNombresCompletos> nuevaCola = new LinkedList<>();
+
+        for (BarcoNombresCompletos barco : cola) {
+            if (barco.getMarca().equalsIgnoreCase(marca)) {
+                nuevaCola.add(barco);
+            }
+        }
+
+        // Mostrar cola original
+        JTextArea textOriginal = new JTextArea("COLA ORIGINAL:\n");
+        for (BarcoNombresCompletos barco : cola) {
+            textOriginal.append(barco.toString() + "\n-------------------\n");
+        }
+
+        // Mostrar nueva cola
+        JTextArea textNueva = new JTextArea("COLA FILTRADA (Marca: " + marca + "):\n");
+        for (BarcoNombresCompletos barco : nuevaCola) {
+            textNueva.append(barco.toString() + "\n-------------------\n");
+        }
+
+        JOptionPane.showMessageDialog(null, new JScrollPane(textOriginal), "Cola Original", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, new JScrollPane(textNueva), "Nueva Cola", JOptionPane.INFORMATION_MESSAGE);
+    }
+}
