@@ -1,0 +1,33 @@
+public class BarcoNombresCompletos {
+    private String matricula;
+    private String marca;
+    private int año;
+    private String tipo;
+
+    // Constructor por defecto
+    public BarcoNombresCompletos() {
+        this.matricula = "DEF123";
+        this.marca = "Generico";
+        this.año = 2000;
+        this.tipo = "Velero";
+    }
+
+    // Constructor con parámetros
+    public BarcoNombresCompletos(String matricula, String marca, int año, String tipo) {
+        this.matricula = matricula;
+        this.marca = marca;
+        this.año = año;
+        this.tipo = tipo;
+    }
+
+    // Getters
+    public String getMatricula() { return matricula; }
+    public String getMarca() { return marca; }
+    public int getAño() { return año; }
+    public String getTipo() { return tipo; }
+
+    @Override
+    public String toString() {
+        return "Matrícula: " + matricula + "\nMarca: " + marca + "\nAño: " + año + "\nTipo: " + tipo;
+    }
+}
